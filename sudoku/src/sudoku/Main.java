@@ -12,10 +12,22 @@ public class Main {
 		    {0, 0, 0, 4, 1, 9, 0, 0, 5},
 		    {0, 0, 0, 0, 8, 0, 0, 7, 9},
 		    };
+	
+	final static int [] [] board2 = {
+			{0, 0, 8, 0, 0, 9, 0, 6, 2},
+		    {0, 0, 0, 0, 0, 0, 0, 0, 5},
+		    {1, 0, 2, 5, 0, 0, 0, 0, 0},
+		    {0, 0, 0, 2, 1, 0, 0, 9, 0},
+		    {0, 5, 0, 0, 0, 0, 6, 0, 0},
+		    {6, 0, 0, 0, 0, 0, 0, 2, 8},
+		    {4, 1, 0, 6, 0, 8, 0, 0, 0},
+		    {8, 6, 0, 0, 3, 0, 1, 0, 0},
+		    {0, 0, 0, 0, 0, 0, 4, 0, 0},
+		    };
 
 	public static void main(String[] args) {
 		sudoku s = new sudoku();
-		s.setMatrix(board1);
+		s.setMatrix(board2);
 		System.out.println(s.solve());
 		System.out.print(s.toString());
 	}
