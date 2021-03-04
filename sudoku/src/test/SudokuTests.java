@@ -25,6 +25,7 @@ class SudokuTests {
 	 */
 	@Test
 	void getSetClear() {
+		s1.clear();
 		assertEquals(0, s1.getNumber(0, 0));
 		s1.setNumber(0, 0, 9);
 		assertEquals(9, s1.getNumber(0, 0));
@@ -44,7 +45,7 @@ class SudokuTests {
 			}
 		}
 		s1.setMatrix(a);
-		
+		assertFalse(s1.isAllValid(), "Not right");
 		s1.clear();
 		for(int r = 0; r < s1.getDimension(); r ++) {
 			for (int c = 0; c < s1.getDimension(); c++) {

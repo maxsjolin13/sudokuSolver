@@ -1,5 +1,10 @@
 package sudoku;
 
+/**
+ * 
+ * @author erikb, maxsj.
+ *
+ */
 public interface SudokuSolver {
 	/**
 	 * Sets the number nbr in box r, c.
@@ -17,42 +22,73 @@ public interface SudokuSolver {
 	public void setNumber(int r, int c, int nbr);
 	
 	/**
-	 * Returns the number in box r,c. If the box i empty 0 is returned.
+	 * Returns the number in box r,c. If the box is empty 0 is returned.
 	 * 
 	 * @param r
 	 *            The row
 	 * @param c
 	 *            The column
-	 * @param number
-	 *            The number to insert in r, c
 	 * @return the number in box r,c or 0 if the box is empty.
 	 * @throws IllegalArgumentException
 	 *             if r or c is outside [0..getDimension()-1]
 	 */
 	public int getNumber(int r, int c);
 	
-	// Tömmer rutan r,c.
-	// IllegalArgumentException om fel värde på r eller c
+	/**
+	 * Empties cell r, c.
+	 * 
+	 * @param r
+	 *            The row
+	 * @param c
+	 *            The column        
+	 * @throws IllegalArgumentException
+	 *             if r or c is outside [0..getDimension()-1]
+	 */
 	public void clearNumber(int r, int c);
 	
-	// Kontrollerar om värdet nbr i rutan r,c är ok enligt reglerna.
-	// IllegalArgumentException om fel värde på r, c eller nbr
+
+	/**
+	 * Checks if nbr on r, c follows sudoku rules.
+	 * 
+	 * @param r
+	 * 			The row
+	 * @param c
+	 * 			The column
+	 * @param nbr
+	 *          The number to insert in box r, c
+	 * @return true if nbr on r, c follows sudoku rules. Else returns false.
+	 * @throws IllegalArgumentException
+	 *          if r or c is outside [0..getDimension()-1]
+	 */
 	public boolean isValid(int r, int c, int nbr);
 
-	// Kontrollerar att alla ifyllda siffrorna uppfyller reglerna.
+	
+	/**
+	 * Checks if entire board follows sudoku rules.
+	 * 
+	 * @return true if entire board follows sudoku rules else false.
+	 */
 	public boolean isAllValid();
 		
-	// Försöker lösa sudokut och returnerar true om det var lösbart, annars false.
+
+	/**
+	 * Tries to solve sudoku.
+	 * 
+	 * @return true if sudoku was solvable else false.
+	 */
 	public boolean solve();
 		
-	// Tömmer alla rutorna i sudokut
+	
+	/**
+	 * Empties all boxes in sudoku.
+	 */
 	public void clear();
 		
 	/**
 	 * Returns the numbers in the grid. An empty box i represented
 	 * by the value 0.
 	 * 
-	 * @return the numbers in the grid
+	 * @return the numbers in the grid.
 	 */
 	public int[][] getMatrix();
 

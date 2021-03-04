@@ -1,9 +1,20 @@
 package sudoku;
 
+
+/**
+ * A simple sudoku implementation of the sudoku interface.
+ * 
+ * @author erikb, maxsj.
+ *
+ */
 public class sudoku implements SudokuSolver {
 	private int [][] grid;
 	private int dim;
-	
+	 
+	/**
+	 * Constructs an empty sudoku grid with default dimensions (9x9).
+	 * 
+	 */
 	public sudoku() {
 		this.dim = getDimension();
 		grid = new int[dim][dim];
@@ -11,11 +22,11 @@ public class sudoku implements SudokuSolver {
 
 	@Override
 	public void setNumber(int r, int c, int nbr) {
-		if(	r < 0 &&
-			r > dim-1 &&
-			c < 0 &&
-			c > dim-1 &&
-			nbr < 0 &&
+		if(	r < 0 ||
+			r > dim-1 ||
+			c < 0 ||
+			c > dim-1 ||
+			nbr < 0 ||
 			nbr > dim) {
 			throw new IllegalArgumentException();
 		}
@@ -25,9 +36,9 @@ public class sudoku implements SudokuSolver {
 
 	@Override
 	public int getNumber(int r, int c) {
-		if(	r < 0 &&
-			r > dim-1 &&
-			c < 0 &&
+		if(	r < 0 ||
+			r > dim-1 ||
+			c < 0 ||
 			c > dim-1) {
 			throw new IllegalArgumentException();
 		}
@@ -37,9 +48,9 @@ public class sudoku implements SudokuSolver {
 
 	@Override
 	public void clearNumber(int r, int c) {
-		if(	r < 0 &&
-			r > dim-1 &&
-			c < 0 &&
+		if(	r < 0 ||
+			r > dim-1 ||
+			c < 0 ||
 			c > dim-1) {
 			throw new IllegalArgumentException();
 		}
@@ -49,11 +60,11 @@ public class sudoku implements SudokuSolver {
 
 	@Override
 	public boolean isValid(int r, int c, int nbr) {
-		if(	r < 0 &&
-			r > dim-1 &&
-			c < 0 &&
-			c > dim-1 &&
-			nbr < 0 &&
+		if(	r < 0 ||
+			r > dim-1 ||
+			c < 0 ||
+			c > dim-1 ||
+			nbr < 0 ||
 			nbr > dim) {
 			throw new IllegalArgumentException();
 		}
@@ -82,7 +93,7 @@ public class sudoku implements SudokuSolver {
 	public boolean isAllValid() {
 		for(int r = 0; r < dim; r++) {
 			for(int c = 0; c < dim; c++) {
-				if(!isValid(r, c, getNumber(r, c))) {
+				if(getNumber(r, c) != 0 && !isValid(r, c, getNumber(r, c))) {
 					return false;
 				}
 			}
@@ -109,7 +120,6 @@ public class sudoku implements SudokuSolver {
 				
 				if(isValid(r, c, i)) {
 					setNumber(r, c, i);
-					System.out.println(toString());
 					solved = next(r, c);
 				}
 			}
@@ -164,6 +174,11 @@ public class sudoku implements SudokuSolver {
 		}
 	} 
 	
+	/**
+	 * Creates a string representation of the sudoku grid.
+	 * 
+	 * @return The sudoku grid.
+	 */
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
