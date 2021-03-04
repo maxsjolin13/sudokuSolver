@@ -73,10 +73,16 @@ public class sudokuController {
     		try {
     	  		for (int r = 0; r < dim; r ++) {
             		for (int c = 0; c < dim; c ++) {
-            			if (textGrid[r][c].getText().isEmpty()) {
+            			String text = textGrid[r][c].getText(); 
+            			if (text.isEmpty()) {
             				grid[r][c] = 0;
             			} else {
-            				grid[r][c] = Integer.parseInt(textGrid[r][c].getText());
+            				int nbr = Integer.parseInt(text);
+            				if (nbr == 0) {
+            					throw new IllegalArgumentException();
+            				} else {
+            					grid[r][c] = Integer.parseInt(text);
+            				}
             			}
                 	}
             	}
@@ -118,7 +124,7 @@ public class sudokuController {
     	pane.add(fields);
     	pane.add(buttons, BorderLayout.SOUTH);
     	
-
+    	frame.getRootPane().setDefaultButton(solve);
     	frame.setSize(new Dimension(600, 600));
     	frame.setVisible(true);
     }
