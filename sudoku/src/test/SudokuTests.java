@@ -8,7 +8,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class SudokuTests {
-	sudoku s1;
+	private sudoku s1;
 
 	@BeforeEach
 	void setUp() throws Exception {
@@ -34,7 +34,8 @@ class SudokuTests {
 	}
 	
 	/*
-	 * Sets entire matrix to 9, then clear, then checks each cell individually.
+	 * Sets entire matrix to 9, then clear, then checks each cell individually
+	 * both manually and with getMatrix().
 	 */
 	@Test
 	void clearAll() {
@@ -47,9 +48,11 @@ class SudokuTests {
 		s1.setMatrix(a);
 		assertFalse(s1.isAllValid(), "Not right");
 		s1.clear();
+		int[][] grid = s1.getMatrix();
 		for(int r = 0; r < s1.getDimension(); r ++) {
 			for (int c = 0; c < s1.getDimension(); c++) {
 				assertEquals(0, s1.getNumber(r, c));
+				assertEquals(0, grid[r][c]);
 			}
 		}
 	}
@@ -109,5 +112,10 @@ class SudokuTests {
 		
 		assertEquals(true, s1.solve(), "Cannot solve fig.1 sudoku");
 	}
-
+	
+	@Test
+	void SolveEmpty() {
+		s1.clear();
+		assertTrue(s1.solve(), "Cannot solve empty sudoku");
+	}
 }

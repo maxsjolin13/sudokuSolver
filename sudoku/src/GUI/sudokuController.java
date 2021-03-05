@@ -79,16 +79,20 @@ public class sudokuController {
             			} else {
             				int nbr = Integer.parseInt(text);
             				if (nbr == 0) {
-            					throw new IllegalArgumentException();
+            					throw new IllegalArgumentException("Number out of bounds.");
             				} else {
             					grid[r][c] = Integer.parseInt(text);
             				}
             			}
                 	}
             	}
-    			sudoku.setMatrix(grid);
+    	  		try {
+    	  			sudoku.setMatrix(grid);
+    	  		} catch (Exception e) {
+    	  			throw new IllegalArgumentException("Number out of bounds.");
+    	  		}
         		if (!sudoku.isAllValid()) {
-        			throw new IllegalArgumentException();
+        			throw new IllegalArgumentException("Current board does not follow sudoku rules.");
         		}
     			if (sudoku.solve()) {
         			int[][] solved = sudoku.getMatrix();
@@ -103,8 +107,8 @@ public class sudokuController {
         			dialog.setVisible(true);
         		}
     		} catch (Exception e) {
-    			opt.setMessage("Invalid input");
-    			JDialog dialog = opt.createDialog("Error");
+    			opt.setMessage(e.getMessage());
+    			JDialog dialog = opt.createDialog("Invalid input");
     			dialog.setVisible(true);
     		}
 
