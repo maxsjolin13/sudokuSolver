@@ -62,14 +62,7 @@ class SudokuTests {
 	 */
 	@Test
 	void SolveAllZeros() {
-		int[][] a = new int[s1.getDimension()][s1.getDimension()];
-		for(int i = 0; i < s1.getDimension(); i ++) {
-			for (int j = 0; j < s1.getDimension(); j++) {
-				a[i][j] = 0;
-			}
-		}
-		s1.setMatrix(a);
-		
+		s1.clear();
 		assertEquals(true, s1.solve(), "Cannot solve empty board");
 	}
 	
@@ -78,13 +71,7 @@ class SudokuTests {
 	 */
 	@Test
 	void SolveUnsolvable() {
-		int[][] a = new int[s1.getDimension()][s1.getDimension()];
-		for(int i = 0; i < s1.getDimension(); i ++) {
-			for (int j = 0; j < s1.getDimension(); j++) {
-				a[i][j] = 0;
-			}
-		}
-		s1.setMatrix(a);
+		s1.clear();
 		s1.setNumber(0, 0, 9);
 		s1.setNumber(2, 2, 9);
 		

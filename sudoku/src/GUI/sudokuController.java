@@ -71,47 +71,22 @@ public class sudokuController {
     	buttons.add(clear);
     	solve.addActionListener(event -> {
     		try {
-    	  		for (int r = 0; r < dim; r ++) {
-            		for (int c = 0; c < dim; c ++) {
-            			String text = textGrid[r][c].getText(); 
-            			if (text.isEmpty()) {
-            				grid[r][c] = 0;
-            			} else {
-            				int nbr = Integer.parseInt(text);
-            				if (nbr == 0) {
-            					throw new IllegalArgumentException("Number out of bounds.");
-            				} else {
-            					grid[r][c] = Integer.parseInt(text);
-            				}
-            			}
-                	}
-            	}
-    	  		try {
-    	  			sudoku.setMatrix(grid);
-    	  		} catch (Exception e) {
-    	  			throw new IllegalArgumentException("Number out of bounds.");
-    	  		}
+    	  		sudoku.setMatrix(loadBoard(textGrid));
         		if (!sudoku.isAllValid()) {
-        			throw new IllegalArgumentException("Current board does not follow sudoku rules.");
-        		}
-    			if (sudoku.solve()) {
-        			int[][] solved = sudoku.getMatrix();
-        	    	for (int r = 0; r < dim; r ++) {
-        	    		for (int c = 0; c < dim; c ++) {
-        	    			textGrid[r][c].setText(Integer.toString(solved[r][c]));
-        	        	}
-        	    	}
+        			dialogMsg(opt, "Error", "Current board does not follow game rules!");
         		} else {
-        			opt.setMessage("No possible solution!");
-        			JDialog dialog = opt.createDialog("Error");
-        			dialog.setVisible(true);
+        			Long t1 = System.nanoTime();
+        			if (sudoku.solve()) {
+        				System.out.println((System.nanoTime() - t1)/1000 + " ns");
+        				updateBoard(textGrid, sudoku.getMatrix());
+            		} else {
+            			System.out.println((System.nanoTime() - t1)/1000 + " ns");
+            			dialogMsg(opt, "Error", "No possible solution!");
+            		}
         		}
     		} catch (Exception e) {
-    			opt.setMessage(e.getMessage());
-    			JDialog dialog = opt.createDialog("Invalid input");
-    			dialog.setVisible(true);
+    			dialogMsg(opt, "Error", "Invalid Input");
     		}
-
     	});
     	clear.addActionListener(event -> {
     		sudoku.clear();
@@ -129,7 +104,43 @@ public class sudokuController {
     	pane.add(buttons, BorderLayout.SOUTH);
     	
     	frame.getRootPane().setDefaultButton(solve);
-    	frame.setSize(new Dimension(600, 600));
+    	frame.setSize(new Dimension(width, height));
     	frame.setVisible(true);
+    }
+    
+    
+    private int[][] loadBoard(JTextField[][] textGrid) {
+    	int[][] res = new int[textGrid.length][textGrid[0].length];
+    	for (int r = 0; r < res.length; r ++) {
+    		for (int c = 0; c < res[0].length; c ++) {
+    			String text = textGrid[r][c].getText(); 
+    			if (text.isEmpty()) {
+    				res[r][c] = 0;
+    			} else {
+    				int nbr = Integer.parseInt(text);
+    				if (nbr == 0) {
+    					throw new IllegalArgumentException("Number out of bounds.");
+    				} else {
+    					res[r][c] = Integer.parseInt(text);
+    				}
+    			}
+        	}
+    	}
+    	return res;
+    }
+    
+    private void updateBoard(JTextField[][] textGrid, int[][] matrix) {
+    	int[][] solved = matrix;
+    	for (int r = 0; r < textGrid.length; r ++) {
+    		for (int c = 0; c < textGrid[0].length; c ++) {
+    			textGrid[r][c].setText(Integer.toString(solved[r][c]));
+        	}
+    	}
+    }
+    
+    private void dialogMsg(JOptionPane opt, String title, String msg) {
+    	opt.setMessage(msg);
+		JDialog dialog = opt.createDialog(title);
+		dialog.setVisible(true);
     }
 }
